@@ -9,14 +9,14 @@ const MONGO_URL = process.env.MONGO_URL
 const port = process.env.PORT || 3000  
 
 
-var corsOptions = {
-  origin: process.env.FRONTEND_URL,
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+// var corsOptions = {
+//   origin: process.env.FRONTEND_URL,
+//   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+// }
 
 const app = express()
 app.use(errorMiddleware)
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
