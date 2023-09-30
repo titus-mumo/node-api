@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const productRoute = require('./routes/ProductRoute')
+const userRoute = require('./routes/UserRoute')
 const errorMiddleware = require('./middleware/ErrorMiddleware')
 const cors = require('cors')
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({extended: false}))
 
 
 app.use('/api', productRoute)
+app.use('/api', userRoute)
 
 
 
