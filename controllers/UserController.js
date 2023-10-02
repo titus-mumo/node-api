@@ -3,6 +3,9 @@ const asyncHandler = require('express-async-handler')
 const passport = require('passport')
 const bcrypt = require('bcrypt')
 
+const initializePassport = require('../passport.config')
+initializePassport(passport)
+
 const getUsers = asyncHandler( async(req, res)=>{
     try {
         const users = await User.find({})
@@ -61,10 +64,35 @@ const deleteUser = async (req, res) => {
     }
 }
 
+const loginUser = async(req,res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({email:email})
+        if(user){
+            try {
+                if (await bcrypt.compare(password, user.password)){
+                    res.status(200).json(user)  
+                }else{
+                    res.status(500).json({message:"Invalid credentials"})
+                }
+            } catch (error) {
+                res.status(500).json({message: error.message})
+            }
+        }else{
+            res.status(500)
+        }    
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
+
+
 module.exports = {
     getUsers,
     getUserByID,
     postUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    loginUser
 }
