@@ -26,6 +26,12 @@ const getUserByID =  asyncHandler(async(req, res)=>{
 const postUser = async (req, res) => {
     try {
         let {email, password} = req.body;
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+        // Email is already registered
+        return res.status(400).json({ message: 'Email is already registered' });
+        }
         const hashedPassword = await bcrypt.hash(password, 10)
         const user = await User.create({email, password: hashedPassword})
         res.status(200).json(user)
