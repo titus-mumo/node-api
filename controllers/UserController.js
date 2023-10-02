@@ -3,8 +3,6 @@ const asyncHandler = require('express-async-handler')
 const passport = require('passport')
 const bcrypt = require('bcrypt')
 
-const initializePassport = require('../passport.config')
-initializePassport(passport)
 
 const getUsers = asyncHandler( async(req, res)=>{
     try {
