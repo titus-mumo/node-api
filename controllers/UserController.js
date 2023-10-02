@@ -1,5 +1,7 @@
 const User = require('../models/userModel')
 const asyncHandler = require('express-async-handler')
+const passport = require('passport')
+const bcrypt = require('bcrypt')
 
 const getUsers = asyncHandler( async(req, res)=>{
     try {
@@ -23,7 +25,8 @@ const getUserByID =  asyncHandler(async(req, res)=>{
 const postUser = async (req, res) => {
     try {
         const {email, password} = req.body;
-        const user = await User.create({email, password})
+        const hashedPassword = bcrypt.hash(password, 10)
+        const user = await User.create({email, hashedPassword})
         res.status(200).json(user)
     } catch (error) {
         console.log(error.message)
