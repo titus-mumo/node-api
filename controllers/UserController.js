@@ -22,7 +22,8 @@ const getUserByID =  asyncHandler(async(req, res)=>{
 
 const postUser = async (req, res) => {
     try {
-        const user = await User.create(req.body)
+        const {email, password} = req.body;
+        const user = await User.create({email, password})
         res.status(200).json(user)
     } catch (error) {
         console.log(error.message)
