@@ -25,7 +25,7 @@ const getUserByID =  asyncHandler(async(req, res)=>{
 const postUser = async (req, res) => {
     try {
         let {email, password} = req.body;
-        const hashedPassword = bcrypt.hash(password, 10)
+        const hashedPassword = await bcrypt.hash(password, 10)
         const user = await User.create({email, password: hashedPassword})
         res.status(200).json(user)
     } catch (error) {
