@@ -24,9 +24,10 @@ const getUserByID =  asyncHandler(async(req, res)=>{
 
 const postUser = async (req, res) => {
     try {
-        const {email, password} = req.body;
+        let {email, password} = req.body;
         const hashedPassword = bcrypt.hash(password, 10)
-        const user = await User.create({email, hashedPassword})
+        passport = hashedPassword
+        const user = await User.create({email, password})
         res.status(200).json(user)
     } catch (error) {
         console.log(error.message)
