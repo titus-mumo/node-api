@@ -26,8 +26,7 @@ const postUser = async (req, res) => {
     try {
         let {email, password} = req.body;
         const hashedPassword = bcrypt.hash(password, 10)
-        passport = hashedPassword
-        const user = await User.create({email, password})
+        const user = await User.create({email, passoword: hashedPassword})
         res.status(200).json(user)
     } catch (error) {
         console.log(error.message)
